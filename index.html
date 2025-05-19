@@ -10,26 +10,12 @@
     <script type="application/javascript" src="composeApp.js"></script>
 </head>
 <body>
-<h2>Loading App...</h2>
-<div id="progress-container">
-    <div id="progress-bar"></div>
-</div>
+<div class="spinner"></div>
 
 <script>
-    const progressBar = document.getElementById('progress-bar');
-    let percent = 0;
-
-    const fakeProgress = setInterval(() => {
-      if (percent < 95) {
-        percent += Math.random() * 5;
-        progressBar.style.width = `${Math.min(95, percent)}%`;
-      }
-    }, 200);
-
     import("./composeApp.js").then(() => {
-      clearInterval(fakeProgress);
-      progressBar.style.width = "100%";
-      document.body.innerHTML = ""; // remove loader
+      // Setelah app siap, hilangkan spinner
+      document.body.innerHTML = "";
     });
 </script>
 </body>
