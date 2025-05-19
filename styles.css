@@ -21,19 +21,6 @@ html, body {
     color: #000000; /* optional: default text color */
 }
 
-@media (prefers-color-scheme: dark) {
-  html, body {
-    background-color: #121212; /* dark mode background */
-    color: #ffffff; /* optional: text color */
-  }
-
-  .spinner {
-    border-color: #424242;
-    border-top-color: #bb86fc;
-  }
-}
-
-
 .spinner {
     border: 8px solid #e0e0e0;
     border-top: 8px solid #6200ee;
@@ -45,4 +32,16 @@ html, body {
 @keyframes spin {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background-color: #121212; /* dark mode background */
+    color: #ffffff; /* optional: text color */
+  }
+
+  .spinner {
+    border-color: #424242;
+    border-top-color: #bb86fc;
+  }
 }
