@@ -8,5 +8,10 @@
     <script type="application/javascript" src="composeApp.js"></script>
 </head>
 <body>
+<div id="loading">Loading app...</div>
+<script type="module">
+    import('./composeApp.js')
+      .then(() => document.getElementById('loading').remove());
+</script>
 </body>
 </html>
