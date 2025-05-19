@@ -8,10 +8,45 @@
     <script type="application/javascript" src="composeApp.js"></script>
 </head>
 <body>
-<div id="loading">Loading app...</div>
-<script type="module">
-    import('./composeApp.js')
-      .then(() => document.getElementById('loading').remove());
+<div id="loading">Loading... <span id="progress">0%</span></div>
+<script>
+    async function loadWithProgress(url, onProgress) {
+      const response = await fetch(url);
+      const contentLength = response.headers.get('content-length');
+      if (!contentLength) {
+        return await response.arrayBuffer(); // fallback
+      }
+
+      const total = parseInt(contentLength, 10);
+      let loaded = 0;
+      const reader = response.body.getReader();
+      const chunks = [];
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+        loaded += value.length;
+        onProgress(loaded / total);
+      }
+
+      const blob = new Blob(chunks);
+      return await blob.arrayBuffer();
+    }
+
+    async function main() {
+      const wasmUrl = "037f170986f544477491.wasm"; // ubah ke nama .wasm kamu
+      await loadWithProgress(wasmUrl, progress => {
+        document.getElementById("progress").textContent = `${Math.round(progress * 100)}%`;
+      });
+
+      // Setelah selesai, lanjut load app
+      const app = await import("./composeApp.js");
+      document.getElementById("loading").remove();
+    }
+
+    main();
 </script>
+</body>
 </body>
 </html>
